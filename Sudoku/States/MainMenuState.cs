@@ -1,0 +1,65 @@
+﻿namespace Sudoku.States
+{
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Input;
+
+    using GameObjects;
+
+    using Sudoku.Events;
+
+    public class MainMenuState : State
+    {
+        private Rectangle buttonPlayArea;
+        private Rectangle buttonSolveArea;        
+        private Rectangle buttonHelpArea;
+        private Rectangle buttonAboutArea;
+
+        private Button playButton;
+        private Button solveButton;
+        private Button helpButton;
+        private Button aboutButton;
+
+
+        public MainMenuState()
+        {
+            this.buttonPlayArea = new Rectangle(240, 270, 80, 50);         
+            this.buttonSolveArea = new Rectangle(230, 335, 95, 40);         
+            this.buttonHelpArea = new Rectangle(235, 395, 80, 50);         
+            this.buttonAboutArea = new Rectangle(230, 455, 100, 35);         
+        }
+
+        public override void LoadButtons()
+        {
+            this.playButton = new Button(Assets.ButtonPlay, Assets.ButtonPlayHighlighted, new Vector2(240, 270));
+            this.solveButton = new Button(Assets.ButtonSolve, Assets.ButtonSolveHighlighted, new Vector2(230, 335));
+            this.helpButton = new Button(Assets.ButtonHelp, Assets.ButtonHelpHighlighted, new Vector2(235, 395));
+            this.aboutButton = new Button(Assets.ButtonAbout, Assets.ButtonAboutHighlighted, new Vector2(220, 450));
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(Assets.MainMenuTexture, Vector2.Zero);
+            this.playButton.Draw(spriteBatch);
+            this.solveButton.Draw(spriteBatch);
+            this.helpButton.Draw(spriteBatch);
+            this.aboutButton.Draw(spriteBatch);                
+            spriteBatch.End();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            this.playButton.IsHighlighted = this.buttonPlayArea.Contains(Mouse.GetState().Position);
+            this.solveButton.IsHighlighted = this.buttonSolveArea.Contains(Mouse.GetState().Position);
+            this.helpButton.IsHighlighted = this.buttonHelpArea.Contains(Mouse.GetState().Position);
+            this.aboutButton.IsHighlighted = this.buttonAboutArea.Contains(Mouse.GetState().Position);
+
+            if (this.buttonPlayArea.Contains(Mouse.GetState().Position)
+                && Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                this.OnButtonClicked(ButtonNames.Play);
+            }
+        }
+    }
+}
