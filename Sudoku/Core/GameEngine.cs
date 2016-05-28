@@ -33,7 +33,7 @@
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            State menu = new MainMenuState();
+            MainMenuState menu = new MainMenuState();
             menu.ButtonClicked += this.MainMenu_ButtonClicked;
             StateManager.CurrentState = menu;
             this.IsMouseVisible = true;
@@ -103,12 +103,12 @@
             {
                 case ButtonNames.Play:
                     var newGameState = new GameState();
-                    newGameState.ButtonClicked += this.GameState_ButtonClicked;
+                    newGameState.LoadButtons();
                     StateManager.CurrentState = newGameState;                    
                     break;
                 case ButtonNames.Solve:
                     var newSolveState = new SolveState();
-                    newSolveState.ButtonClicked += this.SolveState_ButtonClicked;
+                    newSolveState.LoadButtons();
                     StateManager.CurrentState = newSolveState;
                     break;
             }
@@ -119,9 +119,5 @@
             throw new System.NotImplementedException();
         }
 
-        private void GameState_ButtonClicked(object sender, ButtonClickedEventArgs eventargs)
-        {
-            throw new System.NotImplementedException();
-        }
     }    
 }
