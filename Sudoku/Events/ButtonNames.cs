@@ -3,9 +3,8 @@
     public enum ButtonNames
     {
         Play,
-        Solve,
-        Options,
+        Solve,        
         Help,
-        About
+        About,
     }
 }
