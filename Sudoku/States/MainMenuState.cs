@@ -10,6 +10,8 @@
 
     public class MainMenuState : State
     {
+        public event ButtonClickedEventHandler ButtonClicked;
+
         private Rectangle buttonPlayArea;
         private Rectangle buttonSolveArea;        
         private Rectangle buttonHelpArea;
@@ -59,6 +61,21 @@
                 && Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 this.OnButtonClicked(ButtonNames.Play);
+            }
+
+            if (this.buttonSolveArea.Contains(Mouse.GetState().Position)
+                && Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                this.OnButtonClicked(ButtonNames.Solve);
+            }
+        }
+
+        private void OnButtonClicked(ButtonNames button)
+        {
+            if (this.ButtonClicked != null)
+            {
+                ButtonClickedEventArgs args = new ButtonClickedEventArgs(button);
+                this.ButtonClicked(this, args);
             }
         }
     }
