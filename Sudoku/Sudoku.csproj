@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
+    <Compile Include="Core\SudokuSolver.cs" />
     <Compile Include="Events\ButtonClickedEventArgs.cs" />
     <Compile Include="Events\ButtonClickedEventHandler.cs" />
     <Compile Include="Events\ButtonNames.cs" />
