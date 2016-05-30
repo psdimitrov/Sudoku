@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using Sudoku.Exceptions;
+
     public class SudokuSolver
     {
         private const int Size = 9;
@@ -27,13 +29,13 @@
             }
 
             this.ResultBoard = new int[Size, Size];
-            this.MarkBoard();
         }
 
         public int[,] ResultBoard { get; set; }
 
         public int[,] Solve()
         {
+            this.MarkBoard();
             try
             {
                 this.PutNumber(0, 1);
@@ -51,9 +53,18 @@
             {
                 for (int j = 0; j < Size; j++)
                 {
-                    if (this.board[i, j] != 0)
+                    if (this.board[i, j] == 0)
                     {
-                        this.MarkAllAttackedPositions(i, j, this.board[i, j]);
+                        continue;
+                    }
+
+                    if (this.CanPlaceNumberMarking(i, j, this.board[i, j]))
+                    {
+                        this.MarkAllAttackedPositions(i, j, this.board[i, j]);                            
+                    }
+                    else
+                    {
+                        throw new InvalidSudokuCombinationException("The combination of known numbers is invalid");
                     }
                 }
             }
@@ -137,5 +148,14 @@
 
             return !positionOccupied;
         }
-    }
+
+        private bool CanPlaceNumberMarking(int row, int col, int number)
+        {
+            var positionOccupied = this.occupiedCols[number - 1].Contains(col) 
+                || this.occupiedSqueres[number - 1].Contains(row / 3 * 3 + col / 3) 
+                || this.occupiedRows[number - 1].Contains(row);
+
+            return !positionOccupied;
+        }
+    }  
 }
