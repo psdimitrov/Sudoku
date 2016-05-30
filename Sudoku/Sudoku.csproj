@@ -44,6 +44,7 @@
     <Compile Include="Events\ButtonClickedEventHandler.cs" />
     <Compile Include="Events\ButtonNames.cs" />
     <Compile Include="Core\GameEngine.cs" />
+    <Compile Include="Exceptions\InvalidSudokuCombinationException.cs" />
     <Compile Include="GameObjects\Button.cs" />
     <Compile Include="Interfaces\IDrawable.cs" />
     <Compile Include="Interfaces\IState.cs" />

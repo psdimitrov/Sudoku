@@ -10,7 +10,11 @@
         public static Texture2D[] Digits { get; private set; }
         public static Texture2D[] DigitButtons { get; private set; }
         public static Texture2D[] DigitButtonsHighlighted { get; private set; }
-
+        public static Texture2D BackButton { get; private set; }
+        public static Texture2D BackButtonHighlighted { get; private set; }
+        public static Texture2D SolveButton { get; private set; }
+        public static Texture2D SolveButtonHighlighted { get; private set; }
+        public static Texture2D NoSolutionMessage { get; private set; }
         public static Texture2D ButtonPlayHighlighted { get; private set; }
         public static Texture2D ButtonPlay { get; private set; }
         public static Texture2D ButtonSolve { get; private set; }
@@ -25,6 +29,11 @@
             MainMenuTexture = game.Content.Load<Texture2D>("mainMenu");
             GameStateTexture = game.Content.Load<Texture2D>("GameStateClear");
             SolveStateTexture = game.Content.Load<Texture2D>("SolveStateClear");
+            BackButton = game.Content.Load<Texture2D>("BackButton");
+            BackButtonHighlighted = game.Content.Load<Texture2D>("BackButtonHighLighted");
+            SolveButton = game.Content.Load<Texture2D>("SolveButton");
+            SolveButtonHighlighted = game.Content.Load<Texture2D>("SolveButtonHighLighted");
+            NoSolutionMessage = game.Content.Load<Texture2D>("NoSolution");
             ButtonPlayHighlighted = game.Content.Load<Texture2D>("ButtonPlayHighLighted");
             ButtonPlay = game.Content.Load<Texture2D>("ButtonPlay");
             ButtonSolveHighlighted = game.Content.Load<Texture2D>("ButtonSolveHighLighted");

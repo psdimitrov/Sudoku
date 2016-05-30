@@ -1,5 +1,7 @@
 ﻿namespace Sudoku.States
 {
+    using System;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -7,13 +9,20 @@
     using GameObjects;
 
     using Sudoku.Core;
+    using Sudoku.Exceptions;
 
     public class SolveState : State
     {
         private readonly Rectangle[] digitAreas;
         private Button[] digitButtons;
 
+        private Rectangle backButtonArea;
+        private Button backButton;
         private Rectangle solveButtonArea;
+        private Button solveButton;
+
+        private bool noValidSolution;
+
         private readonly Rectangle[,] boardAreas;
         private int[,] matrix;
 
@@ -33,7 +42,8 @@
             this.digitAreas[7] = new Rectangle(312, 565, 42, 45);
             this.digitAreas[8] = new Rectangle(358, 549, 42, 46);
 
-            this.solveButtonArea = new Rectangle(254, 39, 89, 37);
+            this.backButtonArea = new Rectangle(26, 43, 63, 30);
+            this.solveButtonArea = new Rectangle(255, 30, 96, 49);
             this.boardAreas = new Rectangle[9, 9];
             for (int i = 0; i < 9; i++)
             {
@@ -43,13 +53,15 @@
                 }
             }
 
-            this.matrix = new int[9, 9];            
+            this.matrix = new int[9, 9];
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             spriteBatch.Draw(Assets.SolveStateTexture, Vector2.Zero);
+            this.backButton.Draw(spriteBatch);
+            this.solveButton.Draw(spriteBatch);
             for (int i = 0; i < 9; i++)
             {
                 this.digitButtons[i].Draw(spriteBatch);
@@ -66,11 +78,15 @@
                 }
             }
 
+            if (this.noValidSolution) spriteBatch.Draw(Assets.NoSolutionMessage, new Vector2(117, 75));
+
             spriteBatch.End();
         }
 
         public override void Update(GameTime gameTime)
         {
+            this.backButton.IsHighlighted = this.backButtonArea.Contains(Mouse.GetState().Position);
+            this.solveButton.IsHighlighted = this.solveButtonArea.Contains(Mouse.GetState().Position);
             for (int i = 0; i < 9; i++)
             {
                 if (this.digitAreas[i].Contains(Mouse.GetState().Position)
@@ -102,12 +118,21 @@
                 && Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 this.solver = new SudokuSolver(this.matrix);
-                this.matrix = this.solver.Solve();
+                try
+                {
+                    this.matrix = this.solver.Solve();
+                }
+                catch (InvalidSudokuCombinationException)
+                {
+                    this.noValidSolution = true;
+                }
             }
         }
 
         public override void LoadButtons()
         {
+            this.backButton = new Button(Assets.BackButton, Assets.BackButtonHighlighted, new Vector2(20, 40));
+            this.solveButton = new Button(Assets.SolveButton, Assets.SolveButtonHighlighted, new Vector2(255, 30));
             this.digitButtons = new Button[9];
             this.digitButtons[0] = new Button(Assets.DigitButtons[0], Assets.DigitButtonsHighlighted[0], new Vector2(0, 549));
             this.digitButtons[1] = new Button(Assets.DigitButtons[1], Assets.DigitButtonsHighlighted[1], new Vector2(42, 559));
