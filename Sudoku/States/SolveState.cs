@@ -1,18 +1,18 @@
 ﻿namespace Sudoku.States
 {
-    using System;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 
     using GameObjects;
 
-    using Sudoku.Core;
-    using Sudoku.Exceptions;
+    using Core;
+    using Exceptions;
+    using Interfaces;
 
-    public class SolveState : State
+    public class SolveState : IState
     {
+        private readonly IState callerState;
         private readonly Rectangle[] digitAreas;
         private Button[] digitButtons;
 
@@ -29,8 +29,9 @@
         private SudokuSolver solver;
         private int currentDigit;
 
-        public SolveState()
+        public SolveState(IState callerState)
         {
+            this.callerState = callerState;
             this.digitAreas = new Rectangle[9];
             this.digitAreas[0] = new Rectangle(0, 549, 41, 46);
             this.digitAreas[1] = new Rectangle(42, 559, 50, 46);
@@ -56,7 +57,7 @@
             this.matrix = new int[9, 9];
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             spriteBatch.Draw(Assets.SolveStateTexture, Vector2.Zero);
@@ -83,7 +84,7 @@
             spriteBatch.End();
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             this.backButton.IsHighlighted = this.backButtonArea.Contains(Mouse.GetState().Position);
             this.solveButton.IsHighlighted = this.solveButtonArea.Contains(Mouse.GetState().Position);
@@ -114,6 +115,12 @@
                 }
             }
 
+            if (this.backButtonArea.Contains(Mouse.GetState().Position)
+                && Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                StateManager.CurrentState = this.callerState;
+            }
+
             if (this.solveButtonArea.Contains(Mouse.GetState().Position)
                 && Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
@@ -121,6 +128,7 @@
                 try
                 {
                     this.matrix = this.solver.Solve();
+                    this.noValidSolution = false;
                 }
                 catch (InvalidSudokuCombinationException)
                 {
@@ -129,7 +137,7 @@
             }
         }
 
-        public override void LoadButtons()
+        public void LoadButtons()
         {
             this.backButton = new Button(Assets.BackButton, Assets.BackButtonHighlighted, new Vector2(20, 40));
             this.solveButton = new Button(Assets.SolveButton, Assets.SolveButtonHighlighted, new Vector2(255, 30));

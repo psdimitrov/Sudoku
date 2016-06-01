@@ -1,7 +1,9 @@
 ﻿namespace Sudoku.States
 {
+    using Interfaces;
+
     public class StateManager
     {
-        public static State CurrentState { get; set; }
+        public static IState CurrentState { get; set; }
     }
 }

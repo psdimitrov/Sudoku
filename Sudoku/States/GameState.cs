@@ -6,19 +6,23 @@
 
     using GameObjects;
 
-    public class GameState : State
+    using Interfaces;
+
+    public class GameState : IState
     {
         private readonly Rectangle[] digitAreas;
         private Button[] digitButtons;
 
+        private readonly IState callerState;
         private readonly Rectangle[,] boardAreas;
 
         private readonly int[,] matrix;
 
         private int currentDigit = 0;
 
-        public GameState()
+        public GameState(IState callerState)
         {
+            this.callerState = callerState;
             this.digitAreas = new Rectangle[9];
             this.digitAreas[0] = new Rectangle(0, 549, 41, 46);
             this.digitAreas[1] = new Rectangle(42, 559, 50, 46);
@@ -42,7 +46,7 @@
             this.matrix = new int[9, 9];
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             spriteBatch.Draw(Assets.GameStateTexture, Vector2.Zero);
@@ -65,7 +69,7 @@
             spriteBatch.End();
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             for (int i = 0; i < 9; i++)
             {
@@ -95,7 +99,7 @@
             }
         }
 
-        public override void LoadButtons()
+        public void LoadButtons()
         {
             this.digitButtons = new Button[9];
             this.digitButtons[0] = new Button(Assets.DigitButtons[0], Assets.DigitButtonsHighlighted[0], new Vector2(0, 549));
