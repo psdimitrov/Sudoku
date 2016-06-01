@@ -1,4 +1,4 @@
-﻿namespace Sudoku
+﻿namespace Sudoku.Core
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -87,7 +87,7 @@
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            this.GraphicsDevice.Clear(Color.CornflowerBlue);
+            this.GraphicsDevice.Clear(Color.White);
 
             if (StateManager.CurrentState != null)
             {
@@ -102,22 +102,26 @@
             switch (eventargs.Button)
             {
                 case ButtonNames.Play:
-                    var newGameState = new GameState();
+                    var newGameState = new GameState(StateManager.CurrentState);
                     newGameState.LoadButtons();
                     StateManager.CurrentState = newGameState;                    
                     break;
                 case ButtonNames.Solve:
-                    var newSolveState = new SolveState();
+                    var newSolveState = new SolveState(StateManager.CurrentState);
                     newSolveState.LoadButtons();
                     StateManager.CurrentState = newSolveState;
                     break;
+                case ButtonNames.Help:
+                    var newHelpState = new HelpState(StateManager.CurrentState);
+                    newHelpState.LoadButtons();
+                    StateManager.CurrentState = newHelpState;
+                    break;
+                case ButtonNames.About:
+                    var newAboutState = new AboutState(StateManager.CurrentState);
+                    newAboutState.LoadButtons();
+                    StateManager.CurrentState = newAboutState;
+                    break;
             }
         }
-
-        private void SolveState_ButtonClicked(object sender, ButtonClickedEventArgs eventargs)
-        {
-            throw new System.NotImplementedException();
-        }
-
     }    
 }
