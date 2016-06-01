@@ -2,11 +2,14 @@
 {
     using Microsoft.Xna.Framework.Graphics;
 
+    using Core;
+
     public static class Assets
     {
         public static Texture2D MainMenuTexture { get; private set; }
         public static Texture2D GameStateTexture { get; private set; }
         public static Texture2D SolveStateTexture { get; private set; }
+        public static Texture2D AboutStateTexture { get; private set; }
         public static Texture2D[] Digits { get; private set; }
         public static Texture2D[] DigitButtons { get; private set; }
         public static Texture2D[] DigitButtonsHighlighted { get; private set; }
@@ -15,6 +18,8 @@
         public static Texture2D SolveButton { get; private set; }
         public static Texture2D SolveButtonHighlighted { get; private set; }
         public static Texture2D NoSolutionMessage { get; private set; }
+        public static Texture2D BackButtonAbout { get; private set; }
+        public static Texture2D BackButtonAboutHighlighted { get; private set; }
         public static Texture2D ButtonPlayHighlighted { get; private set; }
         public static Texture2D ButtonPlay { get; private set; }
         public static Texture2D ButtonSolve { get; private set; }
@@ -29,11 +34,14 @@
             MainMenuTexture = game.Content.Load<Texture2D>("mainMenu");
             GameStateTexture = game.Content.Load<Texture2D>("GameStateClear");
             SolveStateTexture = game.Content.Load<Texture2D>("SolveStateClear");
+            AboutStateTexture = game.Content.Load<Texture2D>("AboutState");
             BackButton = game.Content.Load<Texture2D>("BackButton");
             BackButtonHighlighted = game.Content.Load<Texture2D>("BackButtonHighLighted");
             SolveButton = game.Content.Load<Texture2D>("SolveButton");
             SolveButtonHighlighted = game.Content.Load<Texture2D>("SolveButtonHighLighted");
             NoSolutionMessage = game.Content.Load<Texture2D>("NoSolution");
+            BackButtonAbout = game.Content.Load<Texture2D>("BackButtonAbout");
+            BackButtonAboutHighlighted = game.Content.Load<Texture2D>("BackButtonAboutHighLighted");
             ButtonPlayHighlighted = game.Content.Load<Texture2D>("ButtonPlayHighLighted");
             ButtonPlay = game.Content.Load<Texture2D>("ButtonPlay");
             ButtonSolveHighlighted = game.Content.Load<Texture2D>("ButtonSolveHighLighted");
@@ -48,7 +56,7 @@
             {
                 Digits[i] = game.Content.Load<Texture2D>("Digit" + (i + 1));
             }
-       
+
             DigitButtons = new Texture2D[9];
             for (int i = 0; i < 9; i++)
             {
