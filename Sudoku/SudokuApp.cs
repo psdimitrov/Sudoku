@@ -2,6 +2,8 @@
 
 namespace Sudoku
 {
+    using Core;
+
 #if WINDOWS || LINUX
     /// <summary>
     /// The main class.
