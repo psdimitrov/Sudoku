@@ -14,7 +14,7 @@
             this.callerState = callerState;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             throw new System.NotImplementedException();
         }

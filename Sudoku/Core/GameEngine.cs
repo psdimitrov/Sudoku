@@ -32,7 +32,6 @@
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             MainMenuState menu = new MainMenuState();
             menu.ButtonClicked += this.MainMenu_ButtonClicked;
             StateManager.CurrentState = menu;
@@ -50,8 +49,6 @@
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);            
             Assets.Initialize(this);
             StateManager.CurrentState.LoadButtons();
-            
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -91,7 +88,7 @@
 
             if (StateManager.CurrentState != null)
             {
-                StateManager.CurrentState.Draw(this.spriteBatch);
+                StateManager.CurrentState.Draw(gameTime, this.spriteBatch);
             }
 
             base.Draw(gameTime);
@@ -102,7 +99,7 @@
             switch (eventargs.Button)
             {
                 case ButtonNames.Play:
-                    var newGameState = new GameState(StateManager.CurrentState);
+                    var newGameState = new GameState(StateManager.CurrentState, eventargs.Time);
                     newGameState.LoadButtons();
                     StateManager.CurrentState = newGameState;                    
                     break;

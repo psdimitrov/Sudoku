@@ -57,15 +57,15 @@
             this.matrix = new int[9, 9];
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             spriteBatch.Draw(Assets.SolveStateTexture, Vector2.Zero);
-            this.backButton.Draw(spriteBatch);
-            this.solveButton.Draw(spriteBatch);
+            this.backButton.Draw(gameTime, spriteBatch);
+            this.solveButton.Draw(gameTime, spriteBatch);
             for (int i = 0; i < 9; i++)
             {
-                this.digitButtons[i].Draw(spriteBatch);
+                this.digitButtons[i].Draw(gameTime, spriteBatch);
             }
 
             for (int i = 0; i < 9; i++)
@@ -77,10 +77,9 @@
                         spriteBatch.Draw(Assets.Digits[this.matrix[i, j] - 1], new Vector2(i * 42 + 12, j * 42 + 112));
                     }
                 }
-            }
+            }            
 
             if (this.noValidSolution) spriteBatch.Draw(Assets.NoSolutionMessage, new Vector2(117, 75));
-
             spriteBatch.End();
         }
 

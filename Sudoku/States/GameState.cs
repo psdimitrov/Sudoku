@@ -1,5 +1,7 @@
 ﻿namespace Sudoku.States
 {
+    using System;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -10,6 +12,7 @@
 
     public class GameState : IState
     {
+        private readonly TimeSpan startTime;
         private readonly Rectangle[] digitAreas;
         private Button[] digitButtons;
 
@@ -18,11 +21,16 @@
 
         private readonly int[,] matrix;
 
+        private Button backButton;
+        private Rectangle backButtonArea;
+
         private int currentDigit = 0;
 
-        public GameState(IState callerState)
+        public GameState(IState callerState, GameTime startTime)
         {
+
             this.callerState = callerState;
+            this.startTime = startTime.TotalGameTime;
             this.digitAreas = new Rectangle[9];
             this.digitAreas[0] = new Rectangle(0, 549, 41, 46);
             this.digitAreas[1] = new Rectangle(42, 559, 50, 46);
@@ -33,7 +41,7 @@
             this.digitAreas[6] = new Rectangle(271, 546, 38, 47);
             this.digitAreas[7] = new Rectangle(312, 565, 42, 45);
             this.digitAreas[8] = new Rectangle(358, 549, 42, 46);
-
+            this.backButtonArea = new Rectangle(26, 43, 63, 30);
             this.boardAreas = new Rectangle[9, 9];
             for (int i = 0; i < 9; i++)
             {
@@ -46,13 +54,13 @@
             this.matrix = new int[9, 9];
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             spriteBatch.Draw(Assets.GameStateTexture, Vector2.Zero);
             for (int i = 0; i < 9; i++)
             {
-                this.digitButtons[i].Draw(spriteBatch);
+                this.digitButtons[i].Draw(gameTime, spriteBatch);
             }
 
             for (int i = 0; i < 9; i++)
@@ -66,6 +74,9 @@
                 }
             }
 
+            this.backButton.Draw(gameTime, spriteBatch);
+            var elapsedTime = gameTime.TotalGameTime - this.startTime;
+            spriteBatch.DrawString(Assets.Font1, elapsedTime.ToString("mm\\:ss"), new Vector2(170, 500), Color.DarkRed);
             spriteBatch.End();
         }
 
@@ -97,10 +108,18 @@
                     }
                 }
             }
+
+            this.backButton.IsHighlighted = this.backButtonArea.Contains(Mouse.GetState().Position);
+            if (this.backButtonArea.Contains(Mouse.GetState().Position) 
+                && Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                StateManager.CurrentState = this.callerState;
+            }
         }
 
         public void LoadButtons()
         {
+            this.backButton = new Button(Assets.BackButton, Assets.BackButtonHighlighted, new Vector2(20, 40));
             this.digitButtons = new Button[9];
             this.digitButtons[0] = new Button(Assets.DigitButtons[0], Assets.DigitButtonsHighlighted[0], new Vector2(0, 549));
             this.digitButtons[1] = new Button(Assets.DigitButtons[1], Assets.DigitButtonsHighlighted[1], new Vector2(42, 559));

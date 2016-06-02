@@ -9,7 +9,7 @@
 
     using Microsoft.Xna.Framework.Input;
 
-    class AboutState : IState
+    public class AboutState : IState
     {
         private Rectangle backButtonArea;
         private Button backButton;
@@ -22,11 +22,11 @@
             this.backButtonArea = new Rectangle(30, 20, 40, 18);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             spriteBatch.Draw(Assets.AboutStateTexture, Vector2.Zero);
-            this.backButton.Draw(spriteBatch);
+            this.backButton.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
 

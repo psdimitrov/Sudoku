@@ -29,6 +29,8 @@
         public static Texture2D ButtonAbout { get; private set; }
         public static Texture2D ButtonAboutHighlighted { get; private set; }
 
+        public static SpriteFont Font1;
+
         public static void Initialize(GameEngine game)
         {
             MainMenuTexture = game.Content.Load<Texture2D>("mainMenu");
@@ -68,6 +70,8 @@
             {
                 DigitButtonsHighlighted[i] = game.Content.Load<Texture2D>("ButtonDigit" + (i + 1) + "HighLighted");
             }
+
+            Font1 = game.Content.Load<SpriteFont>("font1");
         }
     }
 }

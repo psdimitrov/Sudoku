@@ -519,3 +519,9 @@
 /processorParam:TextureFormat=Color
 /build:AboutState.jpg
 
+#begin font1.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:font1.spritefont
+

@@ -23,7 +23,7 @@
 
         public Vector2 Position { get; set; }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(this.IsHighlighted ? this.ImageHighlighted : this.Image, this.Position);
         }

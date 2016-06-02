@@ -23,6 +23,7 @@
         private Button helpButton;
         private Button aboutButton;
 
+        private GameTime time;
 
         public MainMenuState()
         {
@@ -40,14 +41,14 @@
             this.aboutButton = new Button(Assets.ButtonAbout, Assets.ButtonAboutHighlighted, new Vector2(220, 450));
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             spriteBatch.Draw(Assets.MainMenuTexture, Vector2.Zero);
-            this.playButton.Draw(spriteBatch);
-            this.solveButton.Draw(spriteBatch);
-            this.helpButton.Draw(spriteBatch);
-            this.aboutButton.Draw(spriteBatch);                
+            this.playButton.Draw(gameTime, spriteBatch);
+            this.solveButton.Draw(gameTime, spriteBatch);
+            this.helpButton.Draw(gameTime, spriteBatch);
+            this.aboutButton.Draw(gameTime, spriteBatch);                
             spriteBatch.End();
         }
 
@@ -75,13 +76,15 @@
             {
                 this.OnButtonClicked(ButtonNames.About);
             }
+
+            this.time = gameTime;
         }
 
         private void OnButtonClicked(ButtonNames button)
         {
             if (this.ButtonClicked != null)
             {
-                ButtonClickedEventArgs args = new ButtonClickedEventArgs(button);
+                ButtonClickedEventArgs args = new ButtonClickedEventArgs(button, this.time);
                 this.ButtonClicked(this, args);
             }
         }

@@ -1,9 +1,10 @@
 ﻿namespace Sudoku.Interfaces
 {
+    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     public interface IDrawable
     {
-        void Draw(SpriteBatch spriteBatch);
+        void Draw(GameTime gameTime, SpriteBatch spriteBatch);
     }
 }
