@@ -2,6 +2,8 @@
 
 namespace Sudoku
 {
+    using System.Net;
+
     using Core;
 
 #if WINDOWS || LINUX
